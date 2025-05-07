@@ -1,123 +1,78 @@
-#--Grupo 19, Hugo Silva--107203, Miguel Dinis--109318
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Apr 30 19:13:57 2025
 
-#--main.py
-
+@author: ALFIBRAGA
+"""
+from Table import Table 
 from graphics import *
-from button import *
+from Waiter import Waiter
+import time
 
-win= GraphWin("Menu", 800, 600)
+def main():
+    win = GraphWin("Planta da Sala", 650, 650)
+    win.setCoords(0, 0, 150, 150)
 
+    # Mesas
+    mesa1 = Table(22, 40, 40, 54)
+    mesa2 = Table(22, 68, 40, 82)
+    mesa3 = Table(22, 96, 40, 110)
+    mesa4 = Table(44, 40, 62, 54)
+    mesa5 = Table(44, 68, 62, 82)
+    mesa6 = Table(44, 96, 62, 110)
+    mesa7 = Table(88, 40, 106, 54)
+    mesa8 = Table(88, 68, 106, 82)
+    mesa9 = Table(88, 96, 106, 110)
+    mesa10 = Table(110, 40, 128, 54)
+    mesa11 = Table(110, 68, 128, 82)
+    mesa12 = Table(110, 96, 128, 110)
+    mesalonga1 = Table(40.5, 20, 43.5, 130)
+    mesalonga2 = Table(106.5, 20, 109.5, 130)
+    docking1 = Table(62, 140, 75, 150)
+    recolhapratos = Table(75, 140, 88, 150)
+    entregapratos = Table(62, 0, 88, 10)
 
-title = Text(Point(350, 110), "Robô ajudante")
-title.setSize(27)
-title.draw(win)
-robot = Image((Point(550,110)), "robot.png")
-robot.draw(win)
+    mesas = [mesa1, mesa2, mesa3, mesa4, mesa5, mesa6,
+             mesa7, mesa8, mesa9, mesa10, mesa11, mesa12,
+             mesalonga1, mesalonga2, docking1, recolhapratos, entregapratos]
 
-class botão: #Classe para criar os butões
-    def __init__(self, win, x, y, color, label,  width=250, height= 40, radius=10):
-    # Desenhar forma do butão
-        self.circuloQSe= Circle(Point(x, y),radius)
-        self.circuloQSe.setFill("lightblue")
-        self.circuloQSe.setOutline("lightblue")
-        self.circuloQSe.draw(win)
+    for mesa in mesas:
+        mesa.desenhar(win, "brown" if mesa in [mesa1, mesa2, mesa3, mesa4, mesa5, mesa6, mesa7, mesa8, mesa9, mesa10, mesa11, mesa12] else
+                      "black" if mesa in [mesalonga1, mesalonga2] else
+                      "grey" if mesa == docking1 else
+                      "yellow" if mesa == recolhapratos else
+                      "green")
 
+        # Cria o Waiter na docking station superior
+    waiter = Waiter(win, 68, 145)
 
+    mesas_cliente = [mesa1, mesa2, mesa3, mesa4, mesa5, mesa6,
+                     mesa7, mesa8, mesa9, mesa10, mesa11, mesa12]
 
-        self.circuloQIe= Circle(Point(x,y + height),radius)
-        self.circuloQIe.setFill("lightblue")
-        self.circuloQIe.setOutline("lightblue")
-        self.circuloQIe.draw(win)
+    ponto_meio_esquerdo = Point(35, 75)
+    ponto_meio_direito = Point(93, 75)
+    ponto_docking_baixo = entregapratos.getCenter()
+    ponto_docking_cima = docking1.getCenter()
 
+    for mesa in mesas_cliente:
+        destino = mesa.getCenter()
 
-        self.circuloQSd= Circle(Point(x + width, y),radius)
-        self.circuloQSd.setFill("lightblue")
-        self.circuloQSd.setOutline("lightblue")
-        self.circuloQSd.draw(win)
+        # Evita obstáculos dependendo da posição da mesa
+        if destino.getX() < 75:
+            waiter.move_to(ponto_meio_esquerdo)  # Desvia pela esquerda
+        else:
+            waiter.move_to(ponto_meio_direito)  # Desvia pela direita
 
+        waiter.move_to(destino)
+        time.sleep(0.5)
 
-        self.circuloQId= Circle(Point(x + width, y + height),radius)
-        self.circuloQId.setFill("lightblue")
-        self.circuloQId.setOutline("lightblue")
-        self.circuloQId.draw(win)
+        # Vai para a docking inferior (entrega de pratos)
+        waiter.move_to(ponto_docking_baixo)
+        time.sleep(0.5)
 
-        self.retangulo1 = Rectangle(Point(x,y-radius), Point (x + width , y + height + radius))
-        self.retangulo1.setFill("lightblue")
-        self.retangulo1.setOutline("lightblue")
-        self.retangulo1.draw(win)
-
-        self.retangulo2 = Rectangle(Point(x- radius, y),Point(x + width + radius, y + height))
-        self.retangulo2.setFill("lightblue")
-        self.retangulo2.setOutline("lightblue")
-        self.retangulo2.draw(win)
-
-        self.label = Text(Point(x  + width/2, y + height/2), label)
-        self.label.setFill("Black")
-        self.label.draw(win)
-
-        
-        botao = Button(win,Point(x  + width/2, y + height/2), 250, 40, label)
-        
-        return 
-    
-     
-
-       
-                 
-
-
-        
-class exit_botao: #Class para criar o butão exit       
-
-    def __init__(self, win, x= 719, y= 556, width = 81, height = 44):
-
-        self.exit = Rectangle(Point(x,y),Point(x + 81, y + 64 ))
-        self.exit.setFill("lightgrey")
-        self.exit.setOutline("Black")
-        self.exit.draw(win)
-        self.sair = Button(win,Point(x  + width/2, y + height/2), 81, 44, "Exit")
-        self.image = Image((Point(760,580)), "exit.png")
-        self.image.draw(win)
-
-        return
-
-    
-    
-                 
-butao1 = botão(win, 265, 220,"lightblue", "Implementação 1")
-butao2 = botão(win, 265, 340,"lightblue", 'Implementação 2') 
-butao3 = botão(win, 265, 460,"lightblue", 'Implementação 3')
-butaoexit = exit_botao(win)   
+        # Volta para docking superior
+        waiter.move_to(ponto_docking_cima)
+        time.sleep(0.5)
 
 
-
-
-while True: #Função para verificar qual dos butões foi clickado e efetuar o que é desejado.
-    clicked = False
-    click = win.getMouse()
-    if 719 < click.getX() < 800 and 556 < click.getY() < 600:
-        clicked = True
-        if clicked == True:
-            win.close()
-    
-    if 265 < click.getX() < 515 and 220 < click.getY() < 280:
-            clicked = True
-            if clicked == True:
-                  exec(open("Tier1.py").read())
-                  
-    if 265 < click.getX() < 515 and 340 < click.getY() < 400:
-            clicked = True
-            if clicked == True:
-                  exec(open("Tier2.py").read())
-  
-    if 265 < click.getX() < 515 and 460 < click.getY() < 520:
-            clicked = True
-            if clicked == True:
-                  exec(open("Tier3.py").read())
-    
-
-                
-
-
-
-
+main()
