@@ -4,9 +4,20 @@ Created on Wed May  7 14:53:36 2025
 
 @author: ALFIBRAGA
 """
-
-from cubo import Cubo
 from graphics import *
+from math import *
+
+class Cubo:
+    def __init__(self, aresta):
+        self.aresta = aresta
+        
+    def faceArea(self):
+        self.area = self.aresta**2
+        print("A área é", self.area)
+    
+    def surfaceArea(self):
+        self.areatotal = 6*self.aresta**2
+        print("A area total é", self.areatotal)
 
 def main():
     cubo1 = Cubo(10)
