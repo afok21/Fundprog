@@ -19,4 +19,11 @@ class Esfera:
     def volume(self):
         self.volume = 4/3 * pi * self.radius**3
         print("O volume é", self.volume)
-        
+
+def main():
+    
+    esfera1 = Esfera(10)
+    esfera1.surfaceArea()
+    esfera1.volume()
+    
+main()
