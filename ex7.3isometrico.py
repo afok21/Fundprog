@@ -45,6 +45,16 @@ class Cubo:
           Line(front[i], back[i]).draw(win)
 
       return win
+
+      from cubo import Cubo
+
+    def main():
+        cubo1 = Cubo(10)
+        cubo1.faceArea()
+        cubo1.surfaceArea()
+        cubo1.drawIsometrico()
+    
+    main()
     
       win.getMouse()
       win.close()
