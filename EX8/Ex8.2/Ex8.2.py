@@ -7,7 +7,6 @@ Created on Tue May 13 19:30:30 2025
 """
 
 from graphics import *
-from grupo_grafico import*
 
 def main():
 
