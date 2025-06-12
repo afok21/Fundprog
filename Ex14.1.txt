@@ -1,0 +1,29 @@
+% Parâmetros
+x_inicio = -1;
+x_fim = 3;
+passo = 0.01;
+x = x_inicio:passo:x_fim;
+
+% Método com loop (mais lento)
+tic;
+y_loop = zeros(size(x));
+for i = 1:length(x)
+    y_loop(i) = x(i)^2 - 3*x(i) + 2;
+end
+tempo_loop = toc;
+
+% Método vetorizado (mais rápido)
+tic;
+y_vetor = x.^2 - 3*x + 2;
+tempo_vetor = toc;
+
+% Exibir tempos
+fprintf('Tempo com loop: %.6f segundos\n', tempo_loop);
+fprintf('Tempo com vetorização: %.6f segundos\n', tempo_vetor);
+
+% Plotagem
+plot(x, y_vetor, 'b-', 'LineWidth', 1.5);
+xlabel('x');
+ylabel('y(x)');
+title('y(x) = x^2 - 3x + 2');
+grid on;

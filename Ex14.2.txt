@@ -1,0 +1,32 @@
+% Ler dados do arquivo input1.dat
+dados = load('input1.dat');
+x = dados(:, 1);
+y = dados(:, 2);
+n = length(x);
+
+% Cálculo dos coeficientes
+sum_x = sum(x);
+sum_y = sum(y);
+sum_x2 = sum(x.^2);
+sum_xy = sum(x.*y);
+
+% Resolver sistema linear
+A = [n, sum_x; sum_x, sum_x2];
+B = [sum_y; sum_xy];
+coef = A\B;
+
+% Resultados
+a0 = coef(1);
+a1 = coef(2);
+fprintf('Coeficientes:\na0 = %.4f\na1 = %.4f\n', a0, a1);
+
+% Plotagem
+y_ajuste = a0 + a1*x;
+plot(x, y, 'bo', 'MarkerFaceColor', 'b');
+hold on;
+plot(x, y_ajuste, 'r-', 'LineWidth', 2);
+xlabel('x');
+ylabel('y');
+title('Ajuste por Mínimos Quadrados');
+legend('Dados', 'Ajuste Linear', 'Location', 'best');
+grid on;
